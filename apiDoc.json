@@ -1,0 +1,8 @@
+{
+  "name": "react-ant-admin-api api docs",
+  "version": "0.0.1",
+  "description": "react-ant-admin-api 接口文档",
+  "url" : "http://192.168.4.22:3300",
+  "sampleUrl": "http://192.168.4.22:3300",
+  "template": {}
+}

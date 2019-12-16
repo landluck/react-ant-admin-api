@@ -1,0 +1,72 @@
+{
+  "name": "react-ant-admin-api",
+  "version": "1.0.0",
+  "description": "react admin",
+  "private": true,
+  "egg": {
+    "typescript": true,
+    "declarations": true
+  },
+  "scripts": {
+    "start": "npm run ci && egg-scripts start --daemon --title=react-ant-admin-api",
+    "stop": "egg-scripts stop --title=react-ant-admin-api",
+    "dev": "egg-bin dev",
+    "debug": "egg-bin debug",
+    "test-local": "egg-bin test",
+    "test": "npm run lint -- --fix && npm run test-local",
+    "cov": "egg-bin cov",
+    "tsc": "ets && tsc -p tsconfig.json",
+    "ci": "npm run lint && npm run cov && npm run tsc",
+    "autod": "autod",
+    "lint": "tslint --project . -c tslint.json",
+    "clean": "ets clean",
+    "doc": "apidoc -i app/router -o ./app/public",
+    "fix": "npm run lint -- --fix"
+  },
+  "dependencies": {
+    "@alicloud/pop-core": "^1.7.7",
+    "egg": "^2.6.1",
+    "egg-cors": "^2.2.0",
+    "egg-multipart": "^2.9.1",
+    "egg-redis": "^2.4.0",
+    "egg-router-plus": "^1.3.1",
+    "egg-scripts": "^2.6.0",
+    "egg-sequelize": "^5.2.0",
+    "egg-validate": "^2.0.2",
+    "image-size": "^0.8.3",
+    "ip": "^1.1.5",
+    "mysql2": "^2.0.0",
+    "qiniu": "^7.2.2"
+  },
+  "devDependencies": {
+    "@types/mocha": "^2.2.40",
+    "@types/node": "^7.0.12",
+    "@types/supertest": "^2.0.0",
+    "apidoc": "^0.17.7",
+    "autod": "^3.1.0",
+    "autod-egg": "^1.1.0",
+    "egg-bin": "^4.14.0",
+    "egg-ci": "^1.8.0",
+    "egg-mock": "^3.16.0",
+    "sequelize-cli": "^5.4.0",
+    "tslib": "^1.10.0",
+    "tslint": "^5.0.0",
+    "tslint-config-egg": "^1.0.0",
+    "typescript": "^3.7.2"
+  },
+  "engines": {
+    "node": ">=8.9.0"
+  },
+  "ci": {
+    "version": "8"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "eslintIgnore": [
+    "coverage"
+  ],
+  "author": "",
+  "license": "MIT"
+}

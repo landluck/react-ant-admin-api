@@ -1,0 +1,1 @@
+{  "name": "uvdcs api docs",  "version": "0.0.1",  "description": "uvdcs 接口文档",  "url": "http://192.168.4.22:3300",  "sampleUrl": "http://192.168.4.22:3300",  "template": {},  "defaultVersion": "0.0.0",  "apidoc": "0.3.0",  "generator": {    "name": "apidoc",    "time": "2019-12-03T07:31:51.801Z",    "url": "http://apidocjs.com",    "version": "0.17.7"  }}
