@@ -1,9 +1,9 @@
-import { Service } from "egg";
-import { BaseModelStatic } from "./model";
-import SqlUtils from "../utils/sql";
-import { Model, FindAndCountOptions, WhereAttributeHash } from "sequelize";
-import { PageParams, PageInfo } from "../../typings";
-import Page from "../utils/page";
+import { Service } from 'egg';
+import { BaseModelStatic } from './model';
+import SqlUtils from '../utils/sql';
+import { Model, FindAndCountOptions, WhereAttributeHash } from 'sequelize';
+import { PageParams, PageInfo } from '../../typings';
+import Page from '../utils/page';
 
 /**
  * BaseService service 基础类, 提供四个基础方法
@@ -21,8 +21,8 @@ export default class BaseService<T extends Model> extends Service {
     const model = await this.model.findOne({
       ...SqlUtils.queryOptions(),
       where: {
-        id
-      }
+        id,
+      },
     });
 
     if (model) {
@@ -35,33 +35,32 @@ export default class BaseService<T extends Model> extends Service {
   public async findListByKey(
     where: { [key in keyof T]?: T[key] },
     pageParams: PageParams,
-    options?: FindAndCountOptions
+    options?: FindAndCountOptions,
   ): Promise<{ list: T[]; page: PageInfo }> {
     const page = new Page(pageParams);
-
 
     const { rows, count } = await this.model.findAndCountAll({
       where: where as WhereAttributeHash,
       ...SqlUtils.queryOptions(),
       ...page.buildOptions(),
-      ...options
+      ...options,
     });
 
     page.setTotal(count);
 
     return {
       list: rows,
-      page: page.getData()
+      page: page.getData(),
     };
   }
 
   public async removeById(id: number): Promise<boolean> {
     const result = await this.model.destroy({
       where: {
-        id
-      }
+        id,
+      },
     });
-    console.log(result)
+    console.log(result);
 
     if (result === 1) {
       return true;
@@ -72,7 +71,7 @@ export default class BaseService<T extends Model> extends Service {
 
   public async updateById(
     instance: { [key in keyof T]?: T[key] } & { id?: number },
-    id: number
+    id: number,
   ): Promise<boolean> {
     // 删除数据中原有的id
     if (instance.id) {
@@ -81,13 +80,13 @@ export default class BaseService<T extends Model> extends Service {
 
     // 这里的 ctx.user 是全局挂载到 ctx 的用户信息
 
-    const [result] = await this.model.update(
+    const [ result ] = await this.model.update(
       SqlUtils.updateOptions<T>(instance as T, this.ctx.user),
       {
         where: {
-          id
-        }
-      }
+          id,
+        },
+      },
     );
 
     if (result === 1) {
@@ -98,10 +97,10 @@ export default class BaseService<T extends Model> extends Service {
   }
 
   public async createInstance(
-    instance: { [key in keyof T]?: T[key] }
+    instance: { [key in keyof T]?: T[key] },
   ): Promise<T> {
     const model = await this.model.create(
-      SqlUtils.createOptions<T>(instance as T, this.ctx.user)
+      SqlUtils.createOptions<T>(instance as T, this.ctx.user),
     );
 
     return model.get({ plain: true }) as T;

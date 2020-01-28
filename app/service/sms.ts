@@ -1,8 +1,8 @@
-import { Context } from "egg";
-import BaseService from "../core/service";
-import { Sms } from "../model/sms";
+import { Context } from 'egg';
+import BaseService from '../core/service';
+import { Sms } from '../model/sms';
 import SqlUtils from '../utils/sql';
-import { Op } from "sequelize";
+import { Op } from 'sequelize';
 export default class SmsService extends BaseService<Sms> {
   constructor(ctx: Context) {
     super(ctx);
@@ -16,9 +16,9 @@ export default class SmsService extends BaseService<Sms> {
       where: {
         mobile,
         createdAt: {
-          [Op.gte]: new Date()
-        }
-      }
+          [Op.gte]: new Date(),
+        },
+      },
     });
 
     return count;
@@ -29,9 +29,9 @@ export default class SmsService extends BaseService<Sms> {
       where: {
         ip,
         createdAt: {
-          [Op.gte]: new Date()
-        }
-      }
+          [Op.gte]: new Date(),
+        },
+      },
     });
 
     return count;
@@ -54,11 +54,11 @@ export default class SmsService extends BaseService<Sms> {
       code,
       ip,
       bizId: '',
-      content: "",
-      tid: config.templateCode
+      content: '',
+      tid: config.templateCode,
     });
 
-    return record
+    return record;
   }
 
   public async findCodeByMobileAndCode(mobile: string, code: number): Promise<Sms | null> {
@@ -68,12 +68,12 @@ export default class SmsService extends BaseService<Sms> {
         mobile,
         code,
       },
-      ...SqlUtils.queryOptions()
-    })
+      ...SqlUtils.queryOptions(),
+    });
 
     if (message) {
-      return message.get({ plain: true }) as Sms
+      return message.get({ plain: true }) as Sms;
     }
-    return null
+    return null;
   }
 }

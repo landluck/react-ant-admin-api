@@ -18,5 +18,5 @@ export enum ApiResponseMsg {
 
   // 验证码
   SMS_OVER = '发送失败，每个手机号每天最多发送&条',
-  SMS_SND_ERROR = '发送失败，请联系管理员'
+  SMS_SND_ERROR = '发送失败，请联系管理员',
 }

@@ -1,6 +1,6 @@
-import { Context, Service } from "egg";
-import Sms = require("@alicloud/pop-core");
-import { AliyunSmsConfig } from "../../typings";
+import { Context, Service } from 'egg';
+import Sms = require('@alicloud/pop-core');
+import { AliyunSmsConfig } from '../../typings';
 
 interface AliyunResponse {
   BizId: string;
@@ -23,19 +23,19 @@ export default class AliyunService extends Service {
       accessKeyId: this.options.accessKeyId,
       accessKeySecret: this.options.accessKeySecret,
       endpoint: this.options.endpoint,
-      apiVersion: "2017-05-25"
+      apiVersion: '2017-05-25',
     });
   }
 
   // 发送验证码
   public async sendVerifyCode(mobile: string, code: number, signName: string, templateId: string) {
     return await this.sendMessage(
-      [mobile],
+      [ mobile ],
       signName,
       templateId,
       JSON.stringify({
-        code: code
-      })
+        code,
+      }),
     );
   }
 
@@ -44,39 +44,38 @@ export default class AliyunService extends Service {
     mobiles: string[],
     signName: string,
     templateId: string,
-    templateParam?: string
+    templateParam?: string,
   ) {
-
 
     try {
 
       const data: AliyunResponse = await this.aliyunSms.request(
-        "SendSms",
+        'SendSms',
         {
           RegionId: this.options.regionId,
-          PhoneNumbers: mobiles.join(","),
+          PhoneNumbers: mobiles.join(','),
           SignName: signName,
           TemplateCode: templateId,
           TemplateParam: templateParam,
         },
         {
-          method: "POST"
-        }
+          method: 'POST',
+        },
       );
 
-      this.ctx.logger.info('阿里云发送短信验证码结果', data)
-  
-      if (data.Code === "OK") {
+      this.ctx.logger.info('阿里云发送短信验证码结果', data);
+
+      if (data.Code === 'OK') {
         return data.BizId;
       }
-  
+
       return null;
-      
+
     } catch (error) {
 
-      this.ctx.logger.error(error)
+      this.ctx.logger.error(error);
 
-      return null
+      return null;
     }
   }
 }

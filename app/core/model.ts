@@ -1,4 +1,4 @@
-import { DataTypes, Model, BuildOptions } from 'sequelize'
+import { DataTypes, Model, BuildOptions } from 'sequelize';
 
 export interface BaseModel {
 
@@ -16,16 +16,15 @@ export interface BaseModel {
 
 export type BaseModelStatic<T> = typeof Model & (new (values?: object, options?: BuildOptions) => T);
 
-
 export const BaseModelProps = {
 
   // 创建者
   creator: {
-    type: DataTypes.STRING(16)
+    type: DataTypes.STRING(16),
   },
 
   // 修改者
   modifier: {
-    type: DataTypes.STRING(16)
-  }
-}
+    type: DataTypes.STRING(16),
+  },
+};

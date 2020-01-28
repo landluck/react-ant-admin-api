@@ -1,16 +1,15 @@
-import { Controller } from "egg";
+import { Controller } from 'egg';
 
 export interface RoleSearchParams {
-  id?: number
-  name?: any
-  page?: number
-  size?: number
+  id?: number;
+  name?: any;
+  page?: number;
+  size?: number;
 }
 
 export interface RoleMenuParams {
-  id: number
+  id: number;
 }
-
 
 class RoleController extends Controller {
 
@@ -18,55 +17,54 @@ class RoleController extends Controller {
     const { ctx } = this;
 
     ctx.validate({
-      id: /\d+/
-    }, ctx.params)
+      id: /\d+/,
+    }, ctx.params);
 
-    const { id }: RoleMenuParams = ctx.params
+    const { id }: RoleMenuParams = ctx.params;
 
-    const data = await ctx.service.role.findRoleMenuByRoleId(id)
+    const data = await ctx.service.role.findRoleMenuByRoleId(id);
 
-    ctx.success(data)
+    ctx.success(data);
   }
 
   public async updateRoleMenu () {
     const { ctx } = this;
 
     ctx.validate({
-      menuIds: 'array'
-    })
+      menuIds: 'array',
+    });
 
     ctx.validate({
-      id: /\d+/
-    }, ctx.params)
+      id: /\d+/,
+    }, ctx.params);
 
-    const { menuIds }: { menuIds: number[]} = ctx.request.body
-    const { id }: { id: string} = ctx.params
+    const { menuIds }: { menuIds: number[]} = ctx.request.body;
+    const { id }: { id: string} = ctx.params;
 
-    const docs = await ctx.service.role.updateRoleMenuByRoleId(Number(id), menuIds)
+    const docs = await ctx.service.role.updateRoleMenuByRoleId(Number(id), menuIds);
 
     if (docs) {
-      return ctx.success()
+      return ctx.success();
     }
 
-    ctx.fail()
+    ctx.fail();
   }
 
   public async queryList () {
     const { ctx } = this;
 
-    const query: RoleSearchParams = ctx.query
+    const query: RoleSearchParams = ctx.query;
 
-    const data = await ctx.service.role.findList(query)
+    const data = await ctx.service.role.findList(query);
 
-    ctx.success(data)
+    ctx.success(data);
   }
-
 
   public async createOne() {
     const { ctx } = this;
 
     ctx.validate({
-      name: "string"
+      name: 'string',
     });
 
     const data = await this.service.role.createInstance(ctx.request.body);
@@ -79,11 +77,11 @@ class RoleController extends Controller {
   }
 
   public async updateOne() {
-    const { ctx } = this
+    const { ctx } = this;
 
     ctx.validate({
       id: 'number',
-      name: "string"
+      name: 'string',
     });
 
     const docs = await this.service.role.updateById(ctx.request.body, ctx.request.body.id);
@@ -100,12 +98,12 @@ class RoleController extends Controller {
 
     ctx.validate(
       {
-        id: /\d+/
+        id: /\d+/,
       },
-      ctx.params
+      ctx.params,
     );
 
-    const docs = await this.service.role.removeById(ctx.params.id)
+    const docs = await this.service.role.removeById(ctx.params.id);
 
     if (docs) {
       return ctx.success();

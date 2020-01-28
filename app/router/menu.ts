@@ -1,8 +1,8 @@
-import { Application } from 'egg'
+import { Application } from 'egg';
 
 export default (app: Application) => {
   const { controller, router } = app;
-  const apiRouter = router.namespace("/menu");
+  const apiRouter = router.namespace('/menu');
 
   /**
    * @api {post} /menu 创建菜单
@@ -30,7 +30,7 @@ export default (app: Application) => {
    *       data: {}
    *     }
    */
-  apiRouter.post("/", controller.menu.createOne);
+  apiRouter.post('/', controller.menu.createOne);
   /**
    * @api {put} /menu 修改菜单
    * @apiName UpdateMenu
@@ -58,7 +58,7 @@ export default (app: Application) => {
    *       data: {}
    *     }
    */
-  apiRouter.put("/", controller.menu.updateOne);
+  apiRouter.put('/', controller.menu.updateOne);
 
   /**
    * @api {delete} /menu/:id 删除菜单
@@ -79,7 +79,7 @@ export default (app: Application) => {
    *       data: {}
    *     }
    */
-  apiRouter.delete("/:id", controller.menu.removeOne);
+  apiRouter.delete('/:id', controller.menu.removeOne);
 
   /**
    * @api {get} /menu/ 查找菜单列表
@@ -137,7 +137,7 @@ export default (app: Application) => {
    *       }
    *     }
    */
-  apiRouter.get("/", controller.menu.queryList);
+  apiRouter.get('/', controller.menu.queryList);
 
   /**
    * @api {get} /menu/cascader 查找菜单级联列表
@@ -145,7 +145,7 @@ export default (app: Application) => {
    * @apiGroup Menu
    *
    * @apiHeader {String} token 用户token
-   * 
+   *
    * @apiSuccess {Number} code 响应状态码
    * @apiSuccess {String} msg  响应描述
    * @apiSuccess {Array} data 响应结果
@@ -175,5 +175,5 @@ export default (app: Application) => {
    *         ]
    *     }
    */
-  apiRouter.get("/cascader", controller.menu.queryCascader);
+  apiRouter.get('/cascader', controller.menu.queryCascader);
 };

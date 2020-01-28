@@ -2,14 +2,11 @@ import { Context } from 'egg';
 import { Model, DataTypes } from 'sequelize';
 import { BaseModel, BaseModelProps, BaseModelStatic } from '../core/model';
 
-
 export interface Role extends BaseModel, Model {
   id: number;
 
   name: string;
 }
-
-
 
 export default (app: Context) => {
   const sequelize = app.model;
@@ -27,8 +24,8 @@ export default (app: Context) => {
         comment: '角色名称',
       },
       // 注入基本model的配置
-      ...BaseModelProps
-    }
+      ...BaseModelProps,
+    },
   ) as BaseModelStatic<Role>;
 
   // RoleModel.sync({force: true}).then(res => {

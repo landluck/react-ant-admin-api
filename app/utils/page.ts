@@ -1,4 +1,4 @@
-import { PageParams, PageSql, PageInfo } from "../../typings";
+import { PageParams, PageSql, PageInfo } from '../../typings';
 import { toNumber } from './index';
 
 class Page {
@@ -9,7 +9,7 @@ class Page {
 
   constructor({ page, size }: PageParams) {
     this.page = toNumber(page, 1);
-    this.size = toNumber(size, 10)
+    this.size = toNumber(size, 10);
   }
 
   setTotal(count: number) {
@@ -21,7 +21,7 @@ class Page {
   buildOptions(): PageSql {
     return {
       limit: this.size,
-      offset: (this.page - 1) * this.size
+      offset: (this.page - 1) * this.size,
     };
   }
 
@@ -30,7 +30,7 @@ class Page {
       page: this.page,
       size: this.size,
       dataTotal: this.dataTotal,
-      pageTotal: this.pageTotal
+      pageTotal: this.pageTotal,
     };
   }
 }

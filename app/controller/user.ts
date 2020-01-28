@@ -1,12 +1,12 @@
-import { Controller } from "egg";
-import { ApiResponseCode } from "../response/responseCode";
-import { ApiResponseMsg } from "../response/responseMsg";
-import { encodeUserPwd, createToken } from "../utils/user";
-import { User } from "../model/user";
-import ApiDate from "../constants/date";
-import UserConstants from "../constants/user";
-import { verifyMobile, verifyCode } from "../utils/verify";
-import { Sms } from "../model/sms";
+import { Controller } from 'egg';
+import { ApiResponseCode } from '../response/responseCode';
+import { ApiResponseMsg } from '../response/responseMsg';
+import { encodeUserPwd, createToken } from '../utils/user';
+import { User } from '../model/user';
+import ApiDate from '../constants/date';
+import UserConstants from '../constants/user';
+import { verifyMobile, verifyCode } from '../utils/verify';
+import { Sms } from '../model/sms';
 
 interface UserLoginBody {
   account: string;
@@ -48,8 +48,8 @@ class UserController extends Controller {
     const { ctx } = this;
 
     ctx.validate({
-      account: "string",
-      password: "string"
+      account: 'string',
+      password: 'string',
     });
 
     const body: UserLoginBody = ctx.request.body;
@@ -59,14 +59,14 @@ class UserController extends Controller {
     if (!user) {
       return ctx.fail(
         ApiResponseCode.USER_NOT_FOUND,
-        ApiResponseMsg.USER_NOT_FOUND
+        ApiResponseMsg.USER_NOT_FOUND,
       );
     }
 
     if (user.status === UserConstants.UNAVAILABLE) {
       return ctx.fail(
         ApiResponseCode.USER_UNAVAILABLE,
-        ApiResponseMsg.USER_UNAVAILABLE
+        ApiResponseMsg.USER_UNAVAILABLE,
       );
     }
 
@@ -77,7 +77,7 @@ class UserController extends Controller {
     if (pwd !== user.password) {
       return ctx.fail(
         ApiResponseCode.USER_ERROR,
-        ApiResponseMsg.USER_PWD_ERROR
+        ApiResponseMsg.USER_PWD_ERROR,
       );
     }
 
@@ -86,7 +86,7 @@ class UserController extends Controller {
     const docs = await ctx.service.redis.setex(
       token,
       user.id.toString(),
-      ApiDate.ONE_DAY_TIME
+      ApiDate.ONE_DAY_TIME,
     );
     const docsOther = await ctx.service.redis.setMap(user.id.toString(), user);
 
@@ -95,7 +95,7 @@ class UserController extends Controller {
     if (docs && docsOther) {
       return ctx.success({
         token,
-        ...user
+        ...user,
       });
     }
 
@@ -117,7 +117,7 @@ class UserController extends Controller {
 
     const code = await ctx.service.sms.findCodeByMobileAndCode(
       body.mobile,
-      Number(body.code)
+      Number(body.code),
     );
 
     if (!code) {
@@ -129,14 +129,14 @@ class UserController extends Controller {
     if (!user) {
       return ctx.fail(
         ApiResponseCode.USER_NOT_FOUND,
-        ApiResponseMsg.USER_NOT_FOUND
+        ApiResponseMsg.USER_NOT_FOUND,
       );
     }
 
     if (user.status === UserConstants.UNAVAILABLE) {
       return ctx.fail(
         ApiResponseCode.USER_UNAVAILABLE,
-        ApiResponseMsg.USER_UNAVAILABLE
+        ApiResponseMsg.USER_UNAVAILABLE,
       );
     }
 
@@ -151,7 +151,7 @@ class UserController extends Controller {
     const docs = await ctx.service.redis.setex(
       token,
       user.id.toString(),
-      ApiDate.ONE_DAY_TIME
+      ApiDate.ONE_DAY_TIME,
     );
     const docsOther = await ctx.service.redis.setMap(user.id.toString(), user);
 
@@ -160,7 +160,7 @@ class UserController extends Controller {
     if (docs && docsOther) {
       return ctx.success({
         token,
-        ...user
+        ...user,
       });
     }
 
@@ -171,18 +171,18 @@ class UserController extends Controller {
     const { ctx } = this;
 
     ctx.validate({
-      name: "string",
-      account: "string",
-      password: "string",
-      mobile: "string",
-      code: /\d{6}/
+      name: 'string',
+      account: 'string',
+      password: 'string',
+      mobile: 'string',
+      code: /\d{6}/,
     });
 
     const user = ctx.request.body as User & { code: number };
 
     const code: Sms | null = await ctx.service.sms.findCodeByMobileAndCode(
       user.mobile,
-      user.code
+      user.code,
     );
 
     if (!code) {
@@ -190,13 +190,13 @@ class UserController extends Controller {
     }
 
     const hasUser: User | null = await ctx.service.user.findUserByAccount(
-      user.account
+      user.account,
     );
 
     if (hasUser) {
       return ctx.fail(
         ApiResponseCode.RESOURCE_EXISTED,
-        ApiResponseMsg.USER_EXISTED
+        ApiResponseMsg.USER_EXISTED,
       );
     }
 
@@ -221,23 +221,23 @@ class UserController extends Controller {
     const { ctx } = this;
 
     ctx.validate({
-      name: "string",
-      account: "string",
-      mobile: "string",
-      roleId: "number",
-      status: "number"
+      name: 'string',
+      account: 'string',
+      mobile: 'string',
+      roleId: 'number',
+      status: 'number',
     });
 
     const user = ctx.request.body as User;
 
     const hasUser: User | null = await ctx.service.user.findUserByAccount(
-      user.account
+      user.account,
     );
 
     if (hasUser) {
       return ctx.fail(
         ApiResponseCode.RESOURCE_EXISTED,
-        ApiResponseMsg.USER_EXISTED
+        ApiResponseMsg.USER_EXISTED,
       );
     }
 
@@ -258,12 +258,12 @@ class UserController extends Controller {
     const { ctx } = this;
 
     ctx.validate({
-      id: "number",
-      name: "string",
-      account: "string",
-      mobile: "string",
-      roleId: "number",
-      status: "number"
+      id: 'number',
+      name: 'string',
+      account: 'string',
+      mobile: 'string',
+      roleId: 'number',
+      status: 'number',
     });
 
     const user = ctx.request.body as User;
@@ -273,7 +273,7 @@ class UserController extends Controller {
     if (!userData) {
       return ctx.fail(
         ApiResponseCode.USER_NOT_FOUND,
-        ApiResponseMsg.USER_NOT_FOUND
+        ApiResponseMsg.USER_NOT_FOUND,
       );
     }
 
@@ -297,9 +297,9 @@ class UserController extends Controller {
 
     ctx.validate(
       {
-        id: /\d+/
+        id: /\d+/,
       },
-      params
+      params,
     );
 
     const user: User | null = await ctx.service.user.findById(params.id);
@@ -307,7 +307,7 @@ class UserController extends Controller {
     if (!user) {
       return ctx.fail(
         ApiResponseCode.USER_NOT_FOUND,
-        ApiResponseMsg.USER_NOT_FOUND
+        ApiResponseMsg.USER_NOT_FOUND,
       );
     }
 
@@ -326,14 +326,14 @@ class UserController extends Controller {
     ctx.validate({
       mobile: /\d{11}/,
       code: /\d{6}/,
-      password: "string"
+      password: 'string',
     });
 
     const data: UpdateUserPwdBody = ctx.request.body;
 
     const code = await ctx.service.sms.findCodeByMobileAndCode(
       data.mobile,
-      data.code
+      data.code,
     );
 
     if (!code) {
@@ -345,7 +345,7 @@ class UserController extends Controller {
     if (!user) {
       return ctx.fail(
         ApiResponseCode.USER_NOT_FOUND,
-        ApiResponseMsg.USER_NOT_FOUND
+        ApiResponseMsg.USER_NOT_FOUND,
       );
     }
 
@@ -363,11 +363,11 @@ class UserController extends Controller {
   public async queryUserMenu () {
     const { ctx } = this;
 
-    const id = ctx.user.roleId
+    const id = ctx.user.roleId;
 
-    const data = await ctx.service.role.findRoleMenuByRoleId(id)
+    const data = await ctx.service.role.findRoleMenuByRoleId(id);
 
-    ctx.success(data)
+    ctx.success(data);
   }
 }
 

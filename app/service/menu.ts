@@ -1,9 +1,9 @@
-import { Context } from "egg";
-import BaseService from "../core/service";
-import { Menu } from "../model/menu";
-import { MenuSearchQuery } from "../controller/menu";
-import { Op, FindAndCountOptions } from "sequelize";
-import SqlUtils from "../utils/sql";
+import { Context } from 'egg';
+import BaseService from '../core/service';
+import { Menu } from '../model/menu';
+import { MenuSearchQuery } from '../controller/menu';
+import { Op, FindAndCountOptions } from 'sequelize';
+import SqlUtils from '../utils/sql';
 
 export default class MenuService extends BaseService<Menu> {
   constructor(ctx: Context) {
@@ -17,45 +17,45 @@ export default class MenuService extends BaseService<Menu> {
 
     if (ids) {
       where.id = {
-        [Op.in]: ids
+        [Op.in]: ids,
       };
     }
 
     const list = await this.ctx.model.Menu.findAll({
       where,
-      ...SqlUtils.queryOptions()
+      ...SqlUtils.queryOptions(),
     });
-    
+
     for (let i = list.length - 1; i >= 0; i--) {
       const item = list[i].get({ plain: true }) as Menu;
-      for (let z = 0; z < list.length; z++) {
-        const menu = list[z].get({ plain: true }) as Menu;
+      for (const menuData of list) {
+        const menu = menuData.get({ plain: true }) as Menu;
         if (item.parentId === menu.id) {
           if (menu.children) {
             // 进行排序
             for (let s = menu.children.length - 1; s >= 0; s--) {
-              const child = menu.children[s]
+              const child = menu.children[s];
               if (item.sort > child.sort) {
-                menu.children.splice(s + 1, 0, item)
-                break
+                menu.children.splice(s + 1, 0, item);
+                break;
               }
 
               if (s === 0) {
-                menu.children.unshift(item)
+                menu.children.unshift(item);
               }
             }
           } else {
-            menu.children = [item];
+            menu.children = [ item ];
           }
 
           list.splice(i, 1);
-          break
+          break;
         }
       }
     }
 
-    list.sort((a, b) => a.sort - b.sort)
-    
+    list.sort((a, b) => a.sort - b.sort);
+
     return list;
   }
 
@@ -70,7 +70,7 @@ export default class MenuService extends BaseService<Menu> {
 
     if (params.name) {
       query.name = {
-        [Op.like]: `%${params.name}%`
+        [Op.like]: `%${params.name}%`,
       };
     }
 
@@ -80,7 +80,7 @@ export default class MenuService extends BaseService<Menu> {
 
     if (params.url) {
       query.url = {
-        [Op.like]: `%${params.url}%`
+        [Op.like]: `%${params.url}%`,
       };
     }
 
@@ -95,11 +95,11 @@ export default class MenuService extends BaseService<Menu> {
       include: [
         {
           model: this.ctx.model.Menu,
-          as: "parent",
+          as: 'parent',
           required: false,
-          ...SqlUtils.queryOptions()
-        }
-      ]
+          ...SqlUtils.queryOptions(),
+        },
+      ],
     };
 
     return this.findListByKey(query, params, options);

@@ -1,9 +1,9 @@
 export function isEmptyObj(value: any): boolean {
-  return typeof value === "object" && Object.keys(value).length === 0;
+  return typeof value === 'object' && Object.keys(value).length === 0;
 }
 
 export function isNumber(value: any): value is number {
-  return typeof value === "number";
+  return typeof value === 'number';
 }
 
 export function toNumber(value: any, defaultValue?: number): number {

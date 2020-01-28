@@ -1,8 +1,8 @@
-import { Application } from 'egg'
+import { Application } from 'egg';
 
 export default (app: Application) => {
   const { controller, router } = app;
-  const apiRouter = router.namespace("/sms");
+  const apiRouter = router.namespace('/sms');
 
   /**
    * @api {post} /sms 发送验证码
@@ -22,5 +22,5 @@ export default (app: Application) => {
    *       data: {}
    *     }
    */
-  apiRouter.post("/", controller.sms.sendMessage);
+  apiRouter.post('/', controller.sms.sendMessage);
 };

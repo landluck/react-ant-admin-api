@@ -1,4 +1,4 @@
-import { Application } from 'egg'
+import { Application } from 'egg';
 
 export default (app: Application) => {
   const { controller, router } = app;
@@ -180,7 +180,7 @@ export default (app: Application) => {
    * @apiParam {string} mobile 用户手机号
    * @apiParam {Number} code 验证码
    * @apiParam {string} password 新密码
-   * 
+   *
    * @apiSuccess {Number} code 响应状态码
    * @apiSuccess {String} msg  响应描述
    * @apiSuccess {Object} data 响应结果
@@ -249,7 +249,7 @@ export default (app: Application) => {
    *       }
    *     }
    */
-  apiRouter.get("/", controller.user.queryList);
+  apiRouter.get('/', controller.user.queryList);
 
   /**
    * @api {get} /user/menu/:id 查找用户菜单
@@ -271,7 +271,7 @@ export default (app: Application) => {
    * @apiSuccess {Number} data.list.level 菜单等级
    * @apiSuccess {Array} data.list.children 子菜单列表
    * @apiSuccess {Array} data.ids 包含所有菜单的id数组
-   * 
+   *
    * @apiSuccessExample Success-Response:
    *     HTTP/1.1 200 OK
    *     {
@@ -289,5 +289,5 @@ export default (app: Application) => {
    *         ]
    *     }
    */
-  apiRouter.get("/menu", controller.user.queryUserMenu);
+  apiRouter.get('/menu', controller.user.queryUserMenu);
 };

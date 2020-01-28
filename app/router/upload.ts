@@ -1,16 +1,16 @@
-import { Application } from 'egg'
+import { Application } from 'egg';
 
 export default (app: Application) => {
   const { controller, router } = app;
-  const apiRouter = router.namespace("/upload");
+  const apiRouter = router.namespace('/upload');
 
   /**
    * @api {post} /upload/image 上传图片
    * @apiName UploadImage
    * @apiGroup Upload
-   * 
+   *
    * @apiHeader {String} token 用户token
-   * 
+   *
    * @apiParam {String} file 文件数据
    *
    * @apiSuccess {Number} code 响应状态码
@@ -33,5 +33,5 @@ export default (app: Application) => {
    *       ]
    *     }
    */
-  apiRouter.post("/image", controller.upload.uploadImage);
+  apiRouter.post('/image', controller.upload.uploadImage);
 };

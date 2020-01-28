@@ -1,5 +1,5 @@
 import { EggAppConfig, PowerPartial } from 'egg';
-import { AliyunSmsConfig, OssConfig } from '../typings'
+import { AliyunSmsConfig, OssConfig } from '../typings';
 
 export default () => {
   const config = {} as PowerPartial<EggAppConfig> & { sms: AliyunSmsConfig, oss: OssConfig, };
@@ -7,7 +7,6 @@ export default () => {
   // override config from framework / plugin
   // use for cookie sign key, should change to your own and keep security
   config.keys = '_1554196283322_156_xxx';
-
 
   config.cluster = {
     listen: {
@@ -17,8 +16,8 @@ export default () => {
   };
 
   config.multipart = {
-    mode: 'file'
-  }
+    mode: 'file',
+  };
 
   config.security = {
     xframe: {
@@ -58,7 +57,7 @@ export default () => {
   };
 
   config.auth = {
-    url: new Set([ '/user/login', '/user/login-mobile', '/', '/sms']),
+    url: new Set([ '/user/login', '/user/login-mobile', '/', '/sms' ]),
     // ignore (ctx: Context) {
     //   return ctx.url.indexOf('.') !== -1
     // }
@@ -71,26 +70,26 @@ export default () => {
     regionId: 'cn-hangzhou',
     verifyCode: {
       signName: 'xxx',
-      templateCode: 'xxx'
+      templateCode: 'xxx',
     },
     // 单个手机号每天可发送短信条数
     countByMobile: 10,
     // 单个ip每天可发送短信条数
-    countByIp: 30
-  }
+    countByIp: 30,
+  };
 
   config.oss = {
     qiniu: {
       accessKey: 'xxx',
       secretKey: 'xxxx',
       scope: 'xxxx',
-      host: 'xxxx'
+      host: 'xxxx',
     },
     local: {
       prefix: '/public/image',
-      dir: '/app/public/image'
-    }
-  }
+      dir: '/app/public/image',
+    },
+  };
 
   // the return config will combines to EggAppConfig
   return {

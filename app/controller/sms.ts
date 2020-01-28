@@ -1,8 +1,8 @@
-import { Controller } from "egg";
-import { ApiResponseCode } from "../response/responseCode";
-import { ApiResponseMsg } from "../response/responseMsg";
-import { verifyMobile } from "../utils/verify";
-import { createRandomNum } from "../utils/random";
+import { Controller } from 'egg';
+import { ApiResponseCode } from '../response/responseCode';
+import { ApiResponseMsg } from '../response/responseMsg';
+import { verifyMobile } from '../utils/verify';
+import { createRandomNum } from '../utils/random';
 
 export default class SmsController extends Controller {
   public async sendMessage() {
@@ -15,7 +15,7 @@ export default class SmsController extends Controller {
     if (!body.mobile || !verifyMobile(body.mobile)) {
       return ctx.fail(
         ApiResponseCode.PARAMS_ERROR,
-        ApiResponseMsg.MOBILE_ERROR
+        ApiResponseMsg.MOBILE_ERROR,
       );
     }
 
@@ -25,9 +25,9 @@ export default class SmsController extends Controller {
       return ctx.fail(
         ApiResponseCode.RESOURCE_LIMTI,
         ApiResponseMsg.SMS_OVER.replace(
-          "&",
-          this.config.sms.countByMobile.toString()
-        ) as ApiResponseMsg
+          '&',
+          this.config.sms.countByMobile.toString(),
+        ) as ApiResponseMsg,
       );
     }
 
@@ -38,9 +38,9 @@ export default class SmsController extends Controller {
         return ctx.fail(
           ApiResponseCode.RESOURCE_LIMTI,
           ApiResponseMsg.SMS_OVER.replace(
-            "&",
-            this.config.sms.countByMobile.toString()
-          ) as ApiResponseMsg
+            '&',
+            this.config.sms.countByMobile.toString(),
+          ) as ApiResponseMsg,
         );
       }
     }
@@ -53,11 +53,11 @@ export default class SmsController extends Controller {
     if (!doc) {
       return ctx.fail(
         ApiResponseCode.SERVER_ERROR,
-        ApiResponseMsg.SMS_SND_ERROR
+        ApiResponseMsg.SMS_SND_ERROR,
       );
     }
 
-    return ctx.fail(ApiResponseCode.SERVER_ERROR, ('验证码为:' + code ) as ApiResponseMsg)
+    return ctx.fail(ApiResponseCode.SERVER_ERROR, ('验证码为:' + code) as ApiResponseMsg);
 
     // return ctx.success();
   }

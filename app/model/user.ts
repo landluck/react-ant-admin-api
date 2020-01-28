@@ -3,7 +3,6 @@ import { Model, DataTypes } from 'sequelize';
 import { BaseModel, BaseModelProps, BaseModelStatic } from '../core/model';
 import role from './role';
 
-
 export interface User extends BaseModel, Model {
   id: number;
 
@@ -21,8 +20,6 @@ export interface User extends BaseModel, Model {
 
   status: number;
 }
-
-
 
 export default (app: Context) => {
   const sequelize = app.model;
@@ -68,22 +65,20 @@ export default (app: Context) => {
       },
 
       // 注入基本model的配置
-      ...BaseModelProps
+      ...BaseModelProps,
     },
     {
-      indexes: [{ fields: [ 'mobile' ] }, { fields: [ 'account' ] }, { fields: ['role_id']}],
+      indexes: [{ fields: [ 'mobile' ] }, { fields: [ 'account' ] }, { fields: [ 'role_id' ] }],
     },
   ) as BaseModelStatic<User>;
 
-  
-
   UserModel.belongsTo(role(app), {
-    // 不创建外健 
+    // 不创建外健
     constraints: false,
     // 指定关联id
     targetKey: 'id',
-    as: 'role'
-  })
+    as: 'role',
+  });
 
   // UserModel.sync({force: true}).then(res => {
   //   console.log(res)

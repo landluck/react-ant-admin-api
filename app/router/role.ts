@@ -1,8 +1,8 @@
-import { Application } from 'egg'
+import { Application } from 'egg';
 
 export default (app: Application) => {
   const { controller, router } = app;
-  const apiRouter = router.namespace("/role");
+  const apiRouter = router.namespace('/role');
 
   /**
    * @api {post} /role 创建角色
@@ -24,7 +24,7 @@ export default (app: Application) => {
    *       data: {}
    *     }
    */
-  apiRouter.post("/", controller.role.createOne);
+  apiRouter.post('/', controller.role.createOne);
   /**
    * @api {put} /role 修改角色
    * @apiName UpdateRole
@@ -46,7 +46,7 @@ export default (app: Application) => {
    *       data: {}
    *     }
    */
-  apiRouter.put("/", controller.role.updateOne);
+  apiRouter.put('/', controller.role.updateOne);
 
   /**
    * @api {delete} /role/:id 删除角色
@@ -67,7 +67,7 @@ export default (app: Application) => {
    *       data: {}
    *     }
    */
-  apiRouter.delete("/:id", controller.role.removeOne);
+  apiRouter.delete('/:id', controller.role.removeOne);
 
   /**
    * @api {get} /role/ 查找角色列表
@@ -113,7 +113,7 @@ export default (app: Application) => {
    *       }
    *     }
    */
-  apiRouter.get("/", controller.role.queryList);
+  apiRouter.get('/', controller.role.queryList);
 
   /**
    * @api {get} /role/menu/:id 查找角色菜单
@@ -135,7 +135,7 @@ export default (app: Application) => {
    * @apiSuccess {Number} data.list.level 菜单等级
    * @apiSuccess {Array} data.list.children 子菜单列表
    * @apiSuccess {Array} data.ids 包含所有菜单的id数组
-   * 
+   *
    * @apiSuccessExample Success-Response:
    *     HTTP/1.1 200 OK
    *     {
@@ -153,7 +153,7 @@ export default (app: Application) => {
    *         ]
    *     }
    */
-  apiRouter.get("/menu/:id", controller.role.queryRoleMenu);
+  apiRouter.get('/menu/:id', controller.role.queryRoleMenu);
 
   /**
    * @api {put} /role/menu/:id 修改角色菜单
@@ -174,5 +174,5 @@ export default (app: Application) => {
    *       data: {}
    *     }
    */
-  apiRouter.put("/menu/:id", controller.role.updateRoleMenu);
+  apiRouter.put('/menu/:id', controller.role.updateRoleMenu);
 };

@@ -2,7 +2,6 @@ import { Context } from 'egg';
 import { Model, DataTypes } from 'sequelize';
 import { BaseModel, BaseModelProps, BaseModelStatic } from '../core/model';
 
-
 export interface Sms extends BaseModel, Model {
   id?: number;
 
@@ -10,7 +9,7 @@ export interface Sms extends BaseModel, Model {
 
   ip: string;
 
-  bizId: string
+  bizId: string;
 
   content: string;
 
@@ -20,8 +19,6 @@ export interface Sms extends BaseModel, Model {
 
   tid: string;
 }
-
-
 
 export default (app: Context) => {
   const sequelize = app.model;
@@ -53,7 +50,7 @@ export default (app: Context) => {
       },
       code: {
         type: DataTypes.INTEGER({ length: 6 }).UNSIGNED,
-        comment: '短信验证码'
+        comment: '短信验证码',
       },
       tid: {
         type:  DataTypes.STRING(16),
@@ -66,7 +63,7 @@ export default (app: Context) => {
       },
 
       // 注入基本model的配置
-      ...BaseModelProps
+      ...BaseModelProps,
     },
     {
       indexes: [{ fields: [ 'mobile' ] }],

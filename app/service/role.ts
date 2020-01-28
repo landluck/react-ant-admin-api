@@ -1,9 +1,9 @@
-import { Context } from "egg";
-import BaseService from "../core/service";
-import { Role } from "../model/role";
-import { RoleSearchParams } from "../controller/role";
-import { Op, Transaction } from "sequelize";
-import SqlUtils from "../utils/sql";
+import { Context } from 'egg';
+import BaseService from '../core/service';
+import { Role } from '../model/role';
+import { RoleSearchParams } from '../controller/role';
+import { Op, Transaction } from 'sequelize';
+import SqlUtils from '../utils/sql';
 
 export default class RoleService extends BaseService<Role> {
   constructor(ctx: Context) {
@@ -17,7 +17,7 @@ export default class RoleService extends BaseService<Role> {
 
     if (params.name) {
       query.name = {
-        [Op.like]: `%${params.name}%`
+        [Op.like]: `%${params.name}%`,
       };
     }
     if (params.id) {
@@ -30,10 +30,10 @@ export default class RoleService extends BaseService<Role> {
   public async findRoleMenuByRoleId(id: number) {
     const data = await this.ctx.model.RoleMenu.findAll({
       where: {
-        roleId: id
+        roleId: id,
       },
       ...SqlUtils.queryOptions(),
-      order: []
+      order: [],
     });
 
     const ids = data.map(item => item.menuId);
@@ -42,16 +42,16 @@ export default class RoleService extends BaseService<Role> {
 
     return {
       list: menuList,
-      ids: ids
+      ids,
     };
   }
 
   public async updateRoleMenuByRoleId(id: number, menuIds: number[]) {
     const data = await this.ctx.model.RoleMenu.findAll({
       where: {
-        roleId: id
+        roleId: id,
       },
-      ...SqlUtils.queryOptions()
+      ...SqlUtils.queryOptions(),
     });
 
     // 查找到原先的存在的ids
@@ -83,22 +83,22 @@ export default class RoleService extends BaseService<Role> {
       await this.ctx.model.RoleMenu.destroy({
         where: {
           id: {
-            [Op.in]: removeIds
-          }
+            [Op.in]: removeIds,
+          },
         },
-        transaction
+        transaction,
       });
 
       await this.ctx.model.RoleMenu.bulkCreate(
         createIds.map((menuId: number) =>
           SqlUtils.createOptions<{ roleId: number; menuId: number }>(
             { roleId: id, menuId },
-            this.ctx.user
-          )
+            this.ctx.user,
+          ),
         ),
         {
-          transaction
-        }
+          transaction,
+        },
       );
       // 提交事务
       await transaction.commit();

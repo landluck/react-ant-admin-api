@@ -2,21 +2,18 @@ import { Context } from 'egg';
 import { Model, DataTypes } from 'sequelize';
 import { BaseModel, BaseModelProps, BaseModelStatic } from '../core/model';
 
-
 export interface RoleMenu extends BaseModel, Model {
   id: number;
 
   roleId: number;
 
-  menuId: number
+  menuId: number;
 }
-
-
 
 export default (app: Context) => {
   const sequelize = app.model;
 
-  const RoleMenuModel = <BaseModelStatic<RoleMenu>>sequelize.define('uvs_sys_role_menu',
+  const RoleMenuModel = sequelize.define('uvs_sys_role_menu',
     {
       id: {
         primaryKey: true,
@@ -33,12 +30,12 @@ export default (app: Context) => {
         comment: '菜单id',
       },
       // 注入基本model的配置
-      ...BaseModelProps
-    }, 
+      ...BaseModelProps,
+    },
     {
-      indexes: [ { fields: ['role_id'] }, { fields: ['menu_id' ] } ]
-    }
-  );
+      indexes: [{ fields: [ 'role_id' ] }, { fields: [ 'menu_id' ] }],
+    },
+  ) as BaseModelStatic<RoleMenu>;
 
   // RoleMenuModel.sync({force: true}).then(res => {
   //   console.log(res)
