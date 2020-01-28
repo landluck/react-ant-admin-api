@@ -1,4 +1,3 @@
-import ip = require('ip');
 import { EggAppConfig, PowerPartial } from 'egg';
 import { AliyunSmsConfig, OssConfig } from '../typings'
 
@@ -13,7 +12,7 @@ export default () => {
   config.cluster = {
     listen: {
       port: 3300,
-      hostname: ip.address(),
+      hostname: '127.0.0.1',
     },
   };
 

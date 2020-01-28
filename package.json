@@ -2,7 +2,7 @@
   "name": "react-ant-admin-api",
   "version": "1.0.0",
   "description": "react admin",
-  "private": true,
+  "private": false,
   "egg": {
     "typescript": true,
     "declarations": true
