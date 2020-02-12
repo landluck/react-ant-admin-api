@@ -53,9 +53,9 @@ export default class Redis extends Service {
     throw new ApiException(ApiResponseCode.SERVER_ERROR, ApiResponseMsg.SERVER_ERROR);
   }
 
-  public async getMap<T> (key: string): Promise<T | null> {
+  public async getMap<T extends any> (key: string): Promise<T | null> {
     const data = await this.app.redis.hgetall(key);
 
-    return data;
+    return data ? data as T : null;
   }
 }
